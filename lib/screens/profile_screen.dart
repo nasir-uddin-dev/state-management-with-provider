@@ -1,0 +1,51 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:state_management_with_provider/counter_notifier.dart';
+
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Profile"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Consumer<CounterNotifier>(
+              builder: ( context, controller, child) {
+                return Text('${controller.counter}');
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      context.read<CounterNotifier>().decrement();
+                    },
+                    icon: Icon(Icons.remove)),
+                IconButton(
+                    onPressed: () {
+                      context.read<CounterNotifier>().increment();
+                      setState(() {});
+                    },
+                    icon: Icon(Icons.add)),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
